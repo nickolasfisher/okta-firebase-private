@@ -9,15 +9,13 @@ const firebaseApp = firebaseAdmin.initializeApp({
 
 const OktaJwtVerifier = require("@okta/jwt-verifier");
 
-const { OKTA_ISSUER } = process.env;
-
 const oktaJwtVerifier = new OktaJwtVerifier({
-  issuer: OKTA_ISSUER,
+  issuer: 'https://dev-332742.okta.com/oauth2/default'
 });
 
 exports.exchangeOktaTokenForFirebaseToken = functions.https.onCall(
   async (data, context) => {
-    console.log(data);
+    console.log(process.env)
     const accessToken = data.accessToken;
     const jwt = await oktaJwtVerifier.verifyAccessToken(
       accessToken,
